@@ -4,11 +4,14 @@ import { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { getBooksThunk } from '../../redux/booksReducer';
 import { CATEGORIES, SORTED } from './HeaderInfo';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
     const [inputTitle, setInputTitle] = useState<string>('');
     const [selectedOption, setSelectedOption] = useState<string>('all');
     const [sorted, setSorted] = useState<string>('relevance');
+
+    const { startIndex, maxResults } = useSelector((store: any) => store.booksData);
 
     const dispatch: any = useDispatch();
 
@@ -26,7 +29,7 @@ const Header = () => {
     };
 
     const getBooks = () => {
-        dispatch(getBooksThunk(inputTitle, selectedOption, sorted))
+        dispatch(getBooksThunk(inputTitle, selectedOption, sorted, startIndex, maxResults))
     };
 
     return (
