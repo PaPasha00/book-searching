@@ -5,12 +5,12 @@ type TypesSelect = {
 
 export const CATEGORIES: TypesSelect[] = [
     { position: 'all', name: 'Все' },
-    { position: 'art', name: 'Искусство' },
-    { position: 'biography', name: 'Автобиография' },
-    { position: 'computers', name: 'Компьютеры' },
-    { position: 'history', name: 'История' },
-    { position: 'medical', name: 'Медицина' },
-    { position: 'poetry', name: 'Поэзия' },
+    { position: 'all', name: 'Искусство' },
+    { position: 'all', name: 'Автобиография' },
+    { position: 'all', name: 'Компьютеры' },
+    { position: 'all', name: 'История' },
+    { position: 'all', name: 'Медицина' },
+    { position: 'all', name: 'Поэзия' },
 ]
 export const SORTED: TypesSelect[] = [
     { position: 'relevance', name: 'актуальность' },

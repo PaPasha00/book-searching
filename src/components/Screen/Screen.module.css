@@ -26,3 +26,7 @@
     background-color: gray;
     color: white;
 }
+
+.results img {
+    height: 50px;
+}

@@ -31,7 +31,7 @@ let initialState = {
 let booksReducer = (state: TState = initialState, action: { type: string, data: any }) => {
 
     switch (action.type) {
-        case GET_BOOKS:
+        case GET_BOOKS: 
             return {
                 ...state,
                 books: [...state.books, ...action.data.books],
@@ -73,7 +73,7 @@ export const getBooksThunk = (title: string, type: string, order: string, startI
             type: GETTING,
             data: true
         })
-        dispatch({
+        dispatch({ 
             type: 'SET_PARAMS',
             data: {
                 title,
@@ -84,7 +84,7 @@ export const getBooksThunk = (title: string, type: string, order: string, startI
         getBooksAPI.getBooks(title, type, order, startIndex, maxResults)
             .then(({ data }: { data: { items: object, totalItems: number } }) => {
                 if (data.items) {
-                    dispatch({
+                    dispatch({ 
                         type: ADD_BOOKS,
                         data: {
                             books: data.items,
@@ -92,7 +92,7 @@ export const getBooksThunk = (title: string, type: string, order: string, startI
                         }
                     }
                     )
-                    dispatch({
+                    dispatch({ 
                         type: GETTING,
                         data: false
                     })
@@ -101,8 +101,16 @@ export const getBooksThunk = (title: string, type: string, order: string, startI
                     data: false
                 })
             })
+            .catch((err) => {
+                alert('Error' + err)
+                dispatch({
+                    type: GETTING,
+                    data: false
+                })
+            })
     }
 }
+
 
 export const getMoreBooksThunk = (title: string, type: string, order: string, startIndex: number, maxResults: number) => {
     return (dispatch: any) => {
@@ -114,13 +122,14 @@ export const getMoreBooksThunk = (title: string, type: string, order: string, st
             type: 'ADD_PAGE',
             data: 1,
         })
+
         getBooksAPI.getBooks(title, type, order, startIndex + 1, maxResults)
             .then(( data : { data: { items: object, totalItems: string } }) => {
                 if (data) {
                     dispatch(
-                        {
+                        { 
                             type: GET_BOOKS,
-                            data: {
+                            data: { 
                                 books: data.data.items,
                                 counter: data.data.totalItems
                             }
@@ -135,10 +144,18 @@ export const getMoreBooksThunk = (title: string, type: string, order: string, st
                     data: false
                 })
             })
+            .catch((err) => {
+                alert('Error' + err)
+                dispatch({
+                    type: GETTING,
+                    data: false
+                })
+            })
     }
 }
 
-export const getOneBookThunk = (id: string) => {
+
+export const getOneBookThunk = (id: string) => { 
     return (dispatch: any) => {
         dispatch({
             type: GETTING,
@@ -147,8 +164,6 @@ export const getOneBookThunk = (id: string) => {
         getBooksAPI.getOneBook(id)
             .then(({ data }: { data: object }) => {
                 if (data) {
-                    console.log(data);
-                    
                     dispatch(
                         { type: GET_ONE_BOOK, data }
                     )
@@ -156,7 +171,17 @@ export const getOneBookThunk = (id: string) => {
                         type: GETTING,
                         data: false
                     })
-                } 
+                } else dispatch({
+                    type: GETTING,
+                    data: false
+                })
+            })
+            .catch((err) => {
+                alert('Error' + err)
+                dispatch({
+                    type: GETTING,
+                    data: false
+                })
             })
     }
 }

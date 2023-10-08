@@ -5,11 +5,32 @@ import { useDispatch } from 'react-redux';
 import { getBooksThunk } from '../../redux/booksReducer';
 import { CATEGORIES, SORTED } from './HeaderInfo';
 import { useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { motion } from 'framer-motion';
+
+const svgVariants = {
+    hidden: { y: '-50vh', opacity: 0.5 },
+    visible: {
+        y: 0,
+        opacity: 1,
+        transition: { type: 'spring' }
+    },
+}
+const svgVariantsSecond = {
+    hidden: { y: '-50vh', },
+    visible: {
+        y: 0,
+        opacity: 1,
+        transition: { type: 'spring', delay: 1 }
+    },
+}
 
 const Header = () => {
     const [inputTitle, setInputTitle] = useState<string>('');
     const [selectedOption, setSelectedOption] = useState<string>('all');
     const [sorted, setSorted] = useState<string>('relevance');
+
+    let navigate = useNavigate();
 
     const { startIndex, maxResults } = useSelector((store: any) => store.booksData);
 
@@ -29,26 +50,39 @@ const Header = () => {
     };
 
     const getBooks = () => {
+        navigate("/");
         dispatch(getBooksThunk(inputTitle, selectedOption, sorted, startIndex, maxResults))
     };
 
     return (
         <header className={styles.container}>
-            <h1>Поиск книг</h1>
-            <div className={styles.inputArea}>
+            <motion.h1 initial='hidden'
+                variants={svgVariants}
+                animate='visible'
+            >
+                Поиск книг
+            </motion.h1>
+            <motion.div initial='hidden'
+                variants={svgVariants}
+                animate='visible'
+                className={styles.inputArea}>
                 <input
                     className={styles.inputText}
                     value={inputTitle}
                     onChange={handleInputChange} />
                 {
                     inputTitle === ''
-                    ? <button className={styles.button} onClick={() => alert('Введите данные поиска')}>Найти</button>
-                    : <button className={styles.button} onClick={getBooks}>Найти</button>
+                        ? <button className={styles.button} onClick={() => alert('Введите данные поиска')}>Найти</button>
+                        : <button className={styles.button} onClick={getBooks}>Найти</button>
                 }
-                
-            </div>
 
-            <div className={styles.selections}>
+            </motion.div>
+
+            <motion.div
+                className={styles.selections}
+                initial='hidden'
+                variants={svgVariantsSecond}
+                animate='visible'>
                 <h2>Категории</h2>
                 <select onChange={selectCategories} className={styles.inputText}>
                     {
@@ -66,7 +100,7 @@ const Header = () => {
                         ))
                     }
                 </select>
-            </div>
+            </motion.div>
         </header>
     );
 }

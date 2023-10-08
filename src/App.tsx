@@ -11,12 +11,11 @@ function App() {
     <BrowserRouter>
       <Provider store={store} >
         <div className="App">
-          <Header />
-          <Routes>
-            <Route path='/' element={<Screen />} />
-            <Route path='/OneBook/*' element={<OneBook />} />
-
-          </Routes>
+            <Header />
+            <Routes>
+              <Route path='/' element={<Screen />} />
+              <Route path='/OneBook/*' element={<OneBook />} />
+            </Routes>
         </div>
       </Provider>
     </BrowserRouter>
