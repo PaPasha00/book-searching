@@ -45,7 +45,6 @@ const OneBook = () => {
                         </div>
                     </motion.div>
             }</div>
-
     );
 }
 

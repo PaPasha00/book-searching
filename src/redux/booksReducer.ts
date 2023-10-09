@@ -24,7 +24,6 @@ let initialState = {
     startIndex: 0,
     maxResults: 30,
     searchParams: {},
-
     oneBook: {},
 }
 
@@ -67,7 +66,7 @@ let booksReducer = (state: TState = initialState, action: { type: string, data: 
     }
 }
 
-export const getBooksThunk = (title: string, type: string, order: string, startIndex: number, maxResults: number) => {
+export const getBooksThunk = (title: string, type: string, order: string, startIndex: number, maxResults: number)  => {
     return (dispatch: any) => {
         dispatch({
             type: GETTING,
